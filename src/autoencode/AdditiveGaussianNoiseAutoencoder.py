@@ -37,23 +37,23 @@ class AdditiveGaussianNoiseAutoencoder(object):
                                                dtype=tf.float32))
         all_weights['b2']=tf.Variable(tf.zeros([self.n_input],dtype=tf.float32))
         return all_weights
-#���㵱ǰcost
+
     def partial_fit(self,X):
         cost,opt=self.sess.run((self.cost,self.optimizer),
                                feed_dict={self.x:X, self.scale:self.training_scale})
         return cost
-#����������cost
+
     def calc_total_cost(self,X):
         return self.sess.run(self.cost,feed_dict={self.x:X,
                                               self.scale:self.training_scale})
     
 
-#������ز�Ľ��
+
     def transform(self,X):
         return self.sess.run(self.hidden,feed_dict={self.x:X,
                                                   self.scale:self.training_scale})
         
-    #�����ز�Ľ����Ϊ��һ�������
+
     def generate(self,hidden=None):
         if hidden is None:
             hidden=np.random.normal(size=self.weights["b1"])
@@ -75,7 +75,7 @@ def standard_scale(X_train,X_test):
     X_test=preprocessor.transform(X_test)
     return X_train,X_test
     
-    #batch���ѡ��
+
 def get_random_block_from_data(data,batch_size):
     start_index=np.random.randint(0,len(data)-batch_size)
     return data[start_index:(start_index+batch_size)]
